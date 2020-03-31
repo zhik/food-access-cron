@@ -1,0 +1,18 @@
+version: '3'
+services:
+  nginx:
+    image: nginx:1.17.9-alpine
+    hostname: nginx
+    ports:
+      - 80:80
+    container_name: food-access-nginx
+    volumes:
+      - ./public:/usr/share/nginx/html
+  client:
+    build: .
+    container_name: food-access-app
+    volumes: 
+      - ./public:/app/public
+      - ./public/data:/app/public/data
+    depends_on:
+      - nginx
